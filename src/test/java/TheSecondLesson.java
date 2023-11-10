@@ -18,7 +18,7 @@ public class TheSecondLesson {
         Response response = RestAssured
                 .given()
                 .redirects()
-                .follow(false).log().uri()
+                .follow(false)
                 .get("https://playground.learnqa.ru/api/long_redirect")
                 .andReturn();
         String redirect = response.header("location").toString();
@@ -27,18 +27,20 @@ public class TheSecondLesson {
 
     @Test
     public void getLongRedirectAddress() {
-        int statusCode = 0;
+        int statusCode;
         int countRedirect = 0;
-        while (statusCode != 200) {
+        String redirectUrl = "https://playground.learnqa.ru/api/long_redirect";
+        do {
             Response response = RestAssured
                     .given()
                     .redirects()
-                    .follow(true)
-                    .get("https://playground.learnqa.ru/api/long_redirect")
+                    .follow(false)
+                    .get(redirectUrl)
                     .andReturn();
             statusCode = response.statusCode();
+            redirectUrl = response.header("location");
             countRedirect++;
-        }
+        } while (statusCode != 200);
         System.out.println(countRedirect);
     }
 }
