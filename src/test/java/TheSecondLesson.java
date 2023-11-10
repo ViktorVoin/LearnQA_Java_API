@@ -4,8 +4,8 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
 public class TheSecondLesson {
-        @Test
-    public void getJsonMessage(){
+    @Test
+    public void getJsonMessage() {
         JsonPath response = RestAssured
                 .get("https://playground.learnqa.ru/api/get_json_homework")
                 .andReturn().jsonPath();
@@ -29,7 +29,7 @@ public class TheSecondLesson {
     public void getLongRedirectAddress() {
         int statusCode = 0;
         int countRedirect = 0;
-        do {
+        while (statusCode != 200) {
             Response response = RestAssured
                     .given()
                     .redirects()
@@ -38,7 +38,7 @@ public class TheSecondLesson {
                     .andReturn();
             statusCode = response.statusCode();
             countRedirect++;
-        } while (statusCode != 200);
+        }
         System.out.println(countRedirect);
     }
 }
