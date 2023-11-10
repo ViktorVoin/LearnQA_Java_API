@@ -1,7 +1,11 @@
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.*;
 
 public class TheSecondLesson {
     @Test
@@ -15,8 +19,7 @@ public class TheSecondLesson {
 
     @Test
     public void getRedirectAddress() {
-        Response response = RestAssured
-                .given()
+        Response response = given()
                 .redirects()
                 .follow(false)
                 .get("https://playground.learnqa.ru/api/long_redirect")
@@ -31,8 +34,7 @@ public class TheSecondLesson {
         int countRedirect = 0;
         String redirectUrl = "https://playground.learnqa.ru/api/long_redirect";
         do {
-            Response response = RestAssured
-                    .given()
+            Response response = given()
                     .redirects()
                     .follow(false)
                     .get(redirectUrl)
@@ -42,5 +44,27 @@ public class TheSecondLesson {
             countRedirect++;
         } while (statusCode != 200);
         System.out.println(countRedirect);
+    }
+
+    @Test
+    public void tokenValidation() throws InterruptedException {
+        Response response = RestAssured
+                .get("https://playground.learnqa.ru/ajax/api/longtime_job")
+                .andReturn();
+        String token = response.jsonPath().get("token");
+        int time = response.jsonPath().get("seconds");
+        given()
+                .params("token", token)
+                .get("https://playground.learnqa.ru/ajax/api/longtime_job")
+                .then()
+                .assertThat()
+                .body("status", equalTo("Job is NOT ready"));
+        Thread.sleep(time * 1000);
+        given()
+                .params("token", token)
+                .get("https://playground.learnqa.ru/ajax/api/longtime_job")
+                .then()
+                .assertThat()
+                .body("status", equalTo("Job is ready"),"result",notNullValue());
     }
 }
