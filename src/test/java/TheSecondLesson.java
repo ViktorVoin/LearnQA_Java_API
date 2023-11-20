@@ -1,16 +1,11 @@
-import groovy.json.JsonToken;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
-
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
