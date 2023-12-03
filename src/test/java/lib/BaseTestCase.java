@@ -2,6 +2,7 @@ package lib;
 
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
+
 import java.util.Map;
 
 import static org.hamcrest.Matchers.hasKey;
@@ -16,14 +17,14 @@ public class BaseTestCase {
     }
 
     protected String getCookie(Response response, String name) {
-        Map<String,String> cookies = response.getCookies();
+        Map<String, String> cookies = response.getCookies();
 
         assertTrue(cookies.containsKey(name), "Response doesn`t have cookie with " + name);
         return cookies.get(name);
     }
 
     protected int getIntFromJson(Response Response, String name) {
-        Response.then().assertThat().body("$",hasKey(name));
+        Response.then().assertThat().body("$", hasKey(name));
         return Response.jsonPath().getInt(name);
     }
 
