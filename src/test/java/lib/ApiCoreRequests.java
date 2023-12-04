@@ -21,7 +21,7 @@ public class ApiCoreRequests {
     }
 
     @Step("Make a Get-request with cookie")
-    public Response makeGetRequestWithCookie(String url,String cookie) {
+    public Response makeGetRequestWithCookie(String url, String cookie) {
         return given()
                 .filter(new AllureRestAssured())
                 .cookie("auth_sid", cookie)
@@ -38,8 +38,16 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
+    @Step("Make a Get-request with token only")
+    public Response makeGetRequest(String url) {
+        return given()
+                .filter(new AllureRestAssured())
+                .get(url)
+                .andReturn();
+    }
+
     @Step("Make a POST-request")
-    public Response makePostRequest(String url, Map<String,String> authData) {
+    public Response makePostRequest(String url, Map<String, String> authData) {
         return given()
                 .filter(new AllureRestAssured())
                 .body(authData)
