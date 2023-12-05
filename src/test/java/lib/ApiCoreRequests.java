@@ -39,7 +39,7 @@ public class ApiCoreRequests {
     }
 
     @Step("Make a Get-request with token only")
-    public Response makeGetRequest(String url) {
+    public Response makeGetRequestn(String url) {
         return given()
                 .filter(new AllureRestAssured())
                 .get(url)
@@ -61,6 +61,24 @@ public class ApiCoreRequests {
                 .filter(new AllureRestAssured())
                 .body(userData)
                 .post(url)
+                .andReturn();
+    }
+    @Step("Make a PUT-request with token and cookie, and body")
+    public Response makePutRequest(String url, String token, String cookie, Map<String, String> userData) {
+        return given()
+                .filter(new AllureRestAssured())
+                .header(new Header("x-csrf-token", token))
+                .cookie("auth_sid", cookie)
+                .body(userData)
+                .put(url)
+                .andReturn();
+    }
+    @Step("Make a PUT-request with only body")
+    public Response makePutRequest(String url, Map<String, String> userData) {
+        return given()
+                .filter(new AllureRestAssured())
+                .body(userData)
+                .put(url)
                 .andReturn();
     }
 }
