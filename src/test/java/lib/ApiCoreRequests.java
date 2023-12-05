@@ -14,7 +14,7 @@ public class ApiCoreRequests {
     public Response makeGetRequest(String url, String token, String cookie) {
         return given()
                 .filter(new AllureRestAssured())
-                .header(new Header("x-csrf-token", token))
+                .header("x-csrf-token", token)
                 .cookie("auth_sid", cookie)
                 .get(url)
                 .andReturn();
@@ -33,7 +33,7 @@ public class ApiCoreRequests {
     public Response makeGetRequestWithToken(String url, String token) {
         return given()
                 .filter(new AllureRestAssured())
-                .header(new Header("x-csrf-token", token))
+                .header("x-csrf-token", token)
                 .get(url)
                 .andReturn();
     }
@@ -67,7 +67,7 @@ public class ApiCoreRequests {
     public Response makePutRequest(String url, String token, String cookie, Map<String, String> userData) {
         return given()
                 .filter(new AllureRestAssured())
-                .header(new Header("x-csrf-token", token))
+                .header("x-csrf-token", token)
                 .cookie("auth_sid", cookie)
                 .body(userData)
                 .put(url)
@@ -81,4 +81,16 @@ public class ApiCoreRequests {
                 .put(url)
                 .andReturn();
     }
+
+    @Step("Make a DELETE-request with Auth")
+    public Response makeDeleteRequest(String url, String token, String cookie) {
+        return given()
+                .filter(new AllureRestAssured())
+                .header("x-csrf-token", token)
+                .cookie("auth_sid", cookie)
+                .delete(url)
+                .andReturn();
+    }
+
+
 }
