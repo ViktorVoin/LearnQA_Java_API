@@ -1,12 +1,14 @@
 package tests;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -16,6 +18,11 @@ public class UserGetTest extends BaseTestCase {
     ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @Test
+    @Features(value = {@Feature(value = "User Data")})
+    @DisplayName("Something print in console")
+    @Description("Get userData with not auth")
+    @Step("Starting test 'ID some Number testGetUserDataNotAuth'")
+    @Severity(value = SeverityLevel.MINOR)
     public void testGetUserDataNotAuth() {
         Response responseUserData = RestAssured
                 .get("https://playground.learnqa.ru/api/user/2")
