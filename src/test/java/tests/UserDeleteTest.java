@@ -62,10 +62,19 @@ public class UserDeleteTest extends BaseTestCase {
 
     @Test
     public void userDeleteWithAnotherAuth() {
+        Map<String, String> userData;
+        userData = DataGenerator.getRegistrationData();
+        userData.put("email", "test175@test.com");
+
+        Response responseCreateAuth = apiCoreRequests
+                .makePostRequestCreateUser("https://playground.learnqa.ru/api/user/", userData);
+        String userId = BaseTestCase.getStringFromJson((responseCreateAuth), "id");
+
+        responseCreateAuth.prettyPrint();
 
         Map<String, String> authData = new HashMap<>();
-        authData.put("email", "vinkotov@example.com");
-        authData.put("password", "1234");
+        authData.put("email", "test175@test.com");
+        authData.put("password", "123");
 
         Response responseGetAuth = apiCoreRequests
                 .makePostRequest("https://playground.learnqa.ru/api/user/login", authData);
@@ -73,11 +82,13 @@ public class UserDeleteTest extends BaseTestCase {
         responseGetAuth.prettyPrint();
 
         Response responseDeleteUser = apiCoreRequests
-                .makeDeleteRequest("https://playground.learnqa.ru/api/user/" + 86690,
+                .makeDeleteRequest("https://playground.learnqa.ru/api/user/" + 86943,
                         this.getHeader(responseGetAuth, "x-csrf-token"),
                         this.getCookie(responseGetAuth, "auth_sid"));
 
-        responseDeleteUser.prettyPrint();
+        Response responseGetAuthTwice = apiCoreRequests
+                .makePostRequest("https://playground.learnqa.ru/api/user/login", authData);
+        responseGetAuthTwice.prettyPrint();
     }
 
 

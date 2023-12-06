@@ -18,11 +18,11 @@ public class UserGetTest extends BaseTestCase {
     ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @Test
-    @Features(value = {@Feature(value = "User Data")})
-    @DisplayName("Something print in console")
-    @Description("Get userData with not auth")
-    @Step("Starting test 'ID some Number testGetUserDataNotAuth'")
-    @Severity(value = SeverityLevel.MINOR)
+//    @Features(value = {@Feature(value = "User Data")})
+//    @DisplayName("Something print in console")
+//    @Description("Get userData with not auth")
+//    @Step("Starting test 'ID some Number testGetUserDataNotAuth'")
+//    @Severity(value = SeverityLevel.MINOR)
     public void testGetUserDataNotAuth() {
         Response responseUserData = RestAssured
                 .get("https://playground.learnqa.ru/api/user/2")
